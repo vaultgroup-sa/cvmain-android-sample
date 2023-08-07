@@ -12,7 +12,7 @@ android:extractNativeLibs="true"
 ```
 Sync project
 
-##Usage
+## Usage
 Initialize CvRunner and start process
 Make sure that you are starting CvRunner once per application start-up
 One of the way to achieve is to extend Application class and start in onCreate() method 
