@@ -6,19 +6,29 @@ Add below line in app level build.gradle
 ```shell
 implementation fileTree(dir: "libs", include: ["*.aar"])
 ```
+
 Add below line in AndroidManifest.xml
+
 ```shell
 android:extractNativeLibs="true"
 ```
+
 Sync project
 
 ## Usage
-Initialize CvRunner and start process
+
+Initialize CvRunner and start the CvMain process
 Make sure that you are starting CvRunner once per application start-up
-One of the way to achieve is to extend Application class and start in onCreate() method 
+One of the ways to achieve this is to extend the Application class and start process in onCreate()
+method
 
 ```java
- CvRunner cvRunner = CvRunner.getInstance();
- cvRunner.startProcess(getApplicationContext());
+CvRunner cvRunner=CvRunner.getInstance();
+        cvRunner.startProcess(getApplicationContext());
 ```
 
+To stop the CvMain process run
+
+```java
+cvRunner.stopProcess();
+```
