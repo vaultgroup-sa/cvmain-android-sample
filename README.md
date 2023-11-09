@@ -1,7 +1,9 @@
 # cvmain-android-sample
-This is the cvmain library integration manual.
+This is the cvmain library integration manual. You will need binary located in app/libs/cvmain.aar
+Supported ABI: armeabi-v7a 
 
 ## Setup
+Copy cvmain.aar binary to libs folder in project
 Add below line in app level build.gradle
 ```shell
 implementation fileTree(dir: "libs", include: ["*.aar"])
