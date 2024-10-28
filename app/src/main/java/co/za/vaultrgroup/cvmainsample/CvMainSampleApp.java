@@ -2,7 +2,7 @@ package co.za.vaultrgroup.cvmainsample;
 
 import android.app.Application;
 
-import co.za.vaultrgroup.cvmainrs.CvRunner;
+import co.za.vaultgroup.cvmain_android.CvMainService;
 
 public class CvMainSampleApp extends Application {
 
@@ -10,7 +10,9 @@ public class CvMainSampleApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        CvRunner cvRunner = CvRunner.getInstance();
-        cvRunner.startProcess(getApplicationContext());
+        CvMainService.start(getApplicationContext());
+
+//        uncomment to stop
+//        CvMainService.stop();
     }
 }
