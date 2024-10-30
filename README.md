@@ -17,10 +17,25 @@ You will need the following files for successful integration:
 ### Step 1: Add the cvmain Library
 
 1. Copy the `cvmain.aar` file into the `libs` folder of your project.
-2. Open your app-level `build.gradle` file and add the following line:
+2. Open your app-level `build.gradle` file and add the following lines:
 
    ```groovy
-   implementation fileTree(dir: "libs", include: ["*.aar"])
+   
+   android {
+        packaging {
+            jniLibs {
+                useLegacyPackaging true
+            }
+        }
+   }
+   
+   dependencies {
+  
+    implementation fileTree(dir: "libs", include: ["*.aar"])
+   }
+   ```
+
+
 
 ### Step 2: Add Configuration Files
 
