@@ -7,14 +7,12 @@ This document provides detailed instructions for integrating the `cvmain` librar
 You will need the following files for successful integration:
 
 1. **Android Library**: Located at `app/libs/cvmain.aar`
-2. **Configuration Files**: Located in `app/src/main/assets/Archive.zip`
-3. **Native Libraries**: Located in `app/src/main/jniLibs`
 
 **Supported ABI**: `armeabi-v7a`, `arm64-v8a`
 
 ## Setup Instructions
 
-### Step 1: Add the cvmain Library
+### Step 1: Add the cvmain Library and jackson dependency
 
 1. Copy the `cvmain.aar` file into the `libs` folder of your project.
 2. Open your app-level `build.gradle` file and add the following lines:
@@ -31,45 +29,99 @@ You will need the following files for successful integration:
    
    dependencies {
   
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.1'
     implementation fileTree(dir: "libs", include: ["*.aar"])
    }
    ```
 
-
-
-### Step 2: Add Configuration Files
-
-1. Copy the Archive.zip file to the app/src/main/assets directory.
-
-### Step 3: Add Native Libraries
-
-1. Copy the jniLibs directory from app/src/main/jniLibs to your project, ensuring the structure remains intact.
-2. Unzip the contents of the jniLibs folder in the same directory.
-
-### Step 4: Sync the Project
+### Step 2: Sync the Project
 
 After completing the above steps, sync your project with Gradle files to ensure all dependencies are correctly recognized.
 
-### CvMain Configuration
+### Step 3: Configure cvmain
 
-The Archive.zip contains configuration files for CvMain and CvMaster.
+Before starting the application, ensure that the necessary configurations are properly set up. Below
+are the details of the configuration parameters and how to initialize them:
 
-1. Unzip Archive.zip and modify the configuration files as needed.
-2. Once you have completed your configuration, zip the files back up, maintaining the same structure, and ensure you do not change the name of the archive.
+The `CvMainConfiguration` and `CvMaster` defines the main configuration settings for the system.
 
+### CvMainConfiguration Builder Parameters
+
+- **`localServer`**:  
+  Specifies the address of the local server.  
+  Example: `"127.0.0.1:8888"`
+
+- **`mapping`**:  
+  Defines the locker column mapping. Specifies the number of lockers in each column.  
+  **Note**: Maximum of 16 columns and 6 lockers per column.  
+  Example: `new int[]{4, 6, 8}`
+
+- **`useCvLocks`**:  
+  Specifies whether the system uses VG's custom in-house lock mechanism.
+  - `true`: Use the in-house lock mechanism.
+  - `false`: Use a standard lock.  
+    Example: `false`
+
+- **`useMultistateSlave`**:  
+  Specifies whether to use multi-state slave firmware.
+  - `true`: Use multi-state slave boards.
+  - `false`: Use single-state systems.  
+    Example: `false`
+
+- **`useKeypad`**:  
+  Specifies whether the system uses a numeric keypad. Enabling this option connects a keypad to the
+  VG master board.  
+  Example: `false`
+
+### CvMasterConfiguration Builder Parameters
+
+- **`setTcp485Passthrough`**:  
+  Specifies the TCP 485 passthrough address.
+  Example: "192.168.8.3:2320"
+
+### Example Initialization
+
+```java
+CvMainConfiguration configuration = new CvMainConfiguration.Builder()
+        .localServer(new CvMainConfiguration.LocalServer("127.0.0.1:8888"))
+        .mapping(new int[]{4, 6, 8})
+        .useCvLocks(false)
+        .useMultistateSlave(false)
+        .useKeypad(false)
+        .build();
+
+CvMasterConfiguration cvMasterConfiguration = new CvMasterConfiguration.Builder()
+        .setTcp485Passthrough("192.168.8.3:2320")
+        .build();
+```
 ### Usage
 
-To start the CvMain service, use CvMainService. It is essential to start CvMain only once during the application's lifecycle.\
+To start the CvMain service, use CvMainService. It is essential to configure and start CvMain only
+once during the application's lifecycle.\
 A common approach is to extend the Application class and start the process in the onCreate() method. Here’s an example:
 
-```
+```java
 public class YourApp extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        CvMainService.start(getApplicationContext());
+      CvMainConfiguration configuration = new CvMainConfiguration.Builder()
+              .localServer(new CvMainConfiguration.LocalServer("127.0.0.1:8888"))
+              .mapping(new int[]{4, 6, 8})
+              .useCvLocks(false)
+              .useMultistateSlave(false)
+              .useKeypad(false)
+              .build();
+
+      CvMasterConfiguration cvMasterConfiguration = new CvMasterConfiguration.Builder()
+              .setTcp485Passthrough("192.168.8.3:2320")
+              .build();
+
+      CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration);
+
+      CvMainService.start(getApplicationContext());
     }
 }
 ```
