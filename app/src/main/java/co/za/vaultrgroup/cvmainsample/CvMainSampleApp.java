@@ -27,8 +27,6 @@ public class CvMainSampleApp extends Application {
 
         CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration);
 
-        CvMainService.start(getApplicationContext());
-
 //        uncomment to stop
 //        CvMainService.stop();
     }
