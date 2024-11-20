@@ -13,8 +13,9 @@ public class CvMainSampleApp extends Application {
         super.onCreate();
 
         CvMainConfiguration configuration = new CvMainConfiguration.Builder()
-                .localServer(new CvMainConfiguration.LocalServer("127.0.0.1:8888"))
-                .mapping(new int[]{4, 6, 8})
+                .comms("net")
+                .localServer(new CvMainConfiguration.LocalServer("0.0.0.0:7777"))
+                .mapping(new int[]{6})
                 .useCvLocks(false)
                 .useMultistateSlave(false)
                 .useKeypad(false)
