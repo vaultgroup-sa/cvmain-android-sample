@@ -29,7 +29,7 @@ You will need the following files for successful integration:
    
    dependencies {
   
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
     implementation fileTree(dir: "libs", include: ["*.aar"])
    }
    ```
