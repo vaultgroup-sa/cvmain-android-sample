@@ -95,6 +95,11 @@ CvMasterConfiguration cvMasterConfiguration = new CvMasterConfiguration.Builder(
         .setTcp485Passthrough("192.168.8.3:2320")
         .build();
 
+AuthConfiguration authConfiguration = new AuthConfiguration.Builder()
+        .username("username")
+        .password("password")
+        .build();
+
 ```
 ### Usage
 
@@ -120,6 +125,11 @@ public class YourApp extends Application {
 
       CvMasterConfiguration cvMasterConfiguration = new CvMasterConfiguration.Builder()
               .setTcp485Passthrough("192.168.8.3:2320")
+              .build();
+
+      AuthConfiguration authConfiguration = new AuthConfiguration.Builder()
+              .username("username")
+              .password("password")
               .build();
       
       CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration);
