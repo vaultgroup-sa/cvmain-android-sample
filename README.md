@@ -131,8 +131,8 @@ public class YourApp extends Application {
               .username("username")
               .password("password")
               .build();
-      
-      CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration);
+
+      CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration, authConfiguration);
     }
 }
 ```
