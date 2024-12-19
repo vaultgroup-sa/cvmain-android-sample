@@ -31,7 +31,7 @@ public class CvMainSampleApp extends Application {
                 .password("password")
                 .build();
 
-        CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration, authConfiguration);
+        CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration, authConfiguration, false);
 
 //        uncomment to stop
 //        CvMainService.stop();
