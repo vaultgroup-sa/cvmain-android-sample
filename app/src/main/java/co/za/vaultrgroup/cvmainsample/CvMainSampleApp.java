@@ -2,10 +2,13 @@ package co.za.vaultrgroup.cvmainsample;
 
 import android.app.Application;
 
+import com.cellvault.libcvmqtt.Mqtt;
+
 import co.za.vaultgroup.cvmain_android.AuthConfiguration;
 import co.za.vaultgroup.cvmain_android.CvMainConfiguration;
 import co.za.vaultgroup.cvmain_android.CvMainService;
 import co.za.vaultgroup.cvmain_android.CvMasterConfiguration;
+import co.za.vaultgroup.cvmain_android.MqttRunner;
 
 public class CvMainSampleApp extends Application {
 
@@ -32,6 +35,7 @@ public class CvMainSampleApp extends Application {
                 .build();
 
         CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration, authConfiguration, false);
+        MqttRunner.getInstance().startProcess(getApplicationContext(), (topicSplit, s) -> new Mqtt.RecvMsg(true));
 
 //        uncomment to stop
 //        CvMainService.stop();
