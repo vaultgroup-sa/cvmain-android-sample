@@ -142,6 +142,7 @@ public class YourApp extends Application {
               .build();
 
       CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration, authConfiguration);
+      MqttRunner.getInstance().startProcess(getApplicationContext(), (topicSplit, s) -> new Mqtt.RecvMsg(true));
     }
 }
 ```
