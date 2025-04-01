@@ -37,6 +37,7 @@ public class CvMainSampleApp extends Application {
         CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration, authConfiguration, false);
         MqttRunner.getInstance().startProcess(getApplicationContext(), (topicSplit, s) -> new Mqtt.RecvMsg(true));
 
+        System.out.println("Lib version " + CvMainService.getLibVersion());
 //        uncomment to stop
 //        CvMainService.stop();
     }

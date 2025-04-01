@@ -150,6 +150,7 @@ public class YourApp extends Application {
 
       CvMainService.configure(getApplicationContext(), configuration, cvMasterConfiguration, authConfiguration);
       MqttRunner.getInstance().startProcess(getApplicationContext(), (topicSplit, s) -> new Mqtt.RecvMsg(true));
+      System.out.println("Lib version " + CvMainService.getLibVersion());
     }
 }
 ```
