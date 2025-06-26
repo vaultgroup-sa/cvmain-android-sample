@@ -165,3 +165,77 @@ CvMainService.stop();
 ```
 adb logcat | grep cvmain-android
 ```
+
+
+### Integration with Flutter
+For Flutter apps, use a `MethodChannel` to communicate with the `CvMainService`. Example:
+
+```java
+MethodChannel channel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "com.example/cvmain_service");
+channel.setMethodCallHandler((call, result) -> {
+    if (call.method.equals("startService")) {
+        try {
+            CvMainConfiguration mainConfig = new CvMainConfiguration.Builder()
+                .comms("net")
+                .localServer(new CvMainConfiguration.LocalServer("0.0.0.0:7777"))
+                .mapping(new int[]{25, 3, 25, 7})
+                .useCvLocks(false)
+                .useMultistateSlave(false)
+                .useKeypad(false)
+                .build();
+
+            CvMasterConfiguration masterConfig = new CvMasterConfiguration.Builder()
+                .setTcp485Passthrough("192.168.8.3:2320")
+                .build();
+
+            AuthConfiguration authConfig = new AuthConfiguration.Builder()
+                .username(call.argument("username"))
+                .password(call.argument("password"))
+                .build();
+
+            CvMainService.configure(getApplicationContext(), mainConfig, masterConfig, authConfig, false);
+            result.success(true);
+        } catch (Exception e) {
+            result.error("CONFIG_ERROR", "Failed to configure CvMainService", e.getMessage());
+        }
+    } else if (call.method.equals("stopService")) {
+        CvMainService.stop();
+        result.success(true);
+    } else {
+        result.notImplemented();
+    }
+});
+```
+
+Corresponding Flutter code:
+
+```dart
+import 'package:flutter/services.dart';
+
+class CvMainService {
+  static const platform = MethodChannel('com.example/cvmain_service');
+
+  static Future<bool> startService(String username, String password) async {
+    try {
+      final bool result = await platform.invokeMethod('startService', {
+        'username': username,
+        'password': password,
+      });
+      return result;
+    } catch (e) {
+      print('Error starting CvMainService: $e');
+      return false;
+    }
+  }
+
+  static Future<bool> stopService() async {
+    try {
+      final bool result = await platform.invokeMethod('stopService');
+      return result;
+    } catch (e) {
+      print('Error stopping CvMainService: $e');
+      return false;
+    }
+  }
+}
+```
