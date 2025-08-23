@@ -37,15 +37,16 @@ You will need the following files for successful integration:
    }
 
    dependencies {
-
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
-    implementation 'io.grpc:grpc-okhttp:1.47.0'
-    implementation 'io.grpc:grpc-protobuf-lite:1.47.0'
-    implementation 'io.grpc:grpc-stub:1.47.0'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+    // NOTE: don't update jackson.core version, version above 2.13.* will break on android 24
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.5'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.5'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.5'
+    implementation 'com.squareup.okhttp3:okhttp:5.1.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+    implementation 'io.grpc:grpc-okhttp:1.74.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.74.0'
+    implementation 'io.grpc:grpc-stub:1.74.0'
+    implementation 'org.apache.commons:commons-lang3:3.18.0'
     implementation fileTree(dir: "libs", include: ["*.aar"])
    }
    ```
