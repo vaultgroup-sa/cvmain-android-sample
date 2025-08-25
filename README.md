@@ -104,6 +104,22 @@ The same applies to unit registration.
 
 ![Configuration Screen](Screenshot%201.png)
 ![Unit Registration](Screenshot%202.png)
+
+### Getting Registration Code
+
+To register your unit on the web platform, you need to obtain a registration code. Follow these
+steps:
+
+1. Access the web platform at https://web.vaultgroup-cloud.com/units
+2. Navigate to the unit registration section
+3. Select site and press "Schedule Registration"
+
+![Registration Code Step 1](Screenshot%203.png)
+![Registration Code Step 2](Screenshot%204.png)
+
+Once you have obtained the registration code from the web platform, you can use it in the Unit
+Registration screen shown in Screenshot 2 above.
+
 ### Usage
 
 To start the CvMain service, use CvMainService. It is essential to start CvMain only
