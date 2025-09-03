@@ -4,18 +4,13 @@ This document provides detailed instructions for integrating the `cvmain` librar
 
 ## Prerequisites
 
-You will need the following files for successful integration:
-
-1. **Android Library**: Located at `app/libs/cvmain.aar`
-
 **Supported ABI**: `armeabi-v7a`, `arm64-v8a`
 
 ## Setup Instructions
 
-### Step 1: Add the cvmain Library and jackson dependency
+### Step 1: Add the cvmain Library dependency
 
-1. Copy the `cvmain.aar` file into the `libs` folder of your project.
-2. Open AndroidManifest.xml and add the following lines:
+1. Open AndroidManifest.xml and add the following lines:
 
 ```
 <uses-permission android:name="android.permission.INTERNET" />
@@ -37,7 +32,8 @@ You will need the following files for successful integration:
    }
 
    dependencies {
-    // NOTE: don't update jackson.core version, version above 2.13.* will break on android 24
+    implementation("io.github.vaultgroup-sa:cvmain-android:1.0.1")
+   // NOTE: don't update jackson.core version, version above 2.13.* will break on android 24
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.5'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.5'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.5'
@@ -47,7 +43,6 @@ You will need the following files for successful integration:
     implementation 'io.grpc:grpc-protobuf-lite:1.74.0'
     implementation 'io.grpc:grpc-stub:1.74.0'
     implementation 'org.apache.commons:commons-lang3:3.18.0'
-    implementation fileTree(dir: "libs", include: ["*.aar"])
    }
    ```
 
